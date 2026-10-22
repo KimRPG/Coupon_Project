@@ -1,7 +1,8 @@
 package com.example.coupon.controller;
 
-import com.example.coupon.domain.Coupon;
 import com.example.coupon.dto.ApiResponse;
+import com.example.coupon.dto.CouponDTO;
+import com.example.coupon.service.IssueCouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +13,13 @@ import java.util.List;
 @RequestMapping("/api/coupons")
 @RequiredArgsConstructor
 public class IssueCouponController {
+    private final IssueCouponService issuedCouponService;
+
+
     @GetMapping("/available")
-    public List<ApiResponse<Coupon>> getAvailableCoupons() {
-        List<ApiResponse<Coupon>> test = new ArrayList<>();
-        test.add(new ApiResponse<Coupon>(true, new Coupon(), "test"));
-        return test;
+    public ApiResponse<List<CouponDTO>> getAvailableCoupons() {
+        return ApiResponse.success(issuedCouponService.getAvailableCoupon());
+
     }
 
     @PostMapping("/{couponId}/issue")

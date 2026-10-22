@@ -1,5 +1,6 @@
 package com.example.coupon.dto;
 
+import com.example.coupon.domain.Coupon;
 import com.example.coupon.domain.domainEnum.CouponStatus;
 import com.example.coupon.domain.domainEnum.CouponType;
 import jakarta.persistence.Column;
@@ -23,4 +24,21 @@ public record CouponDTO(
         LocalDateTime startDate,
         LocalDateTime endDate
 ) {
+    public static CouponDTO from(Coupon coupon) {
+        return new CouponDTO(
+                coupon.getId(),
+                coupon.getName(),
+                coupon.getDescription(),
+                coupon.getCouponType(),
+                coupon.getCouponStatus(),
+                coupon.getDiscountValue(),
+                coupon.getMinOrderAmount(),
+                coupon.getMaxDiscountAmount(),
+                coupon.getTotalQuantity(),
+                coupon.getIssuedQuantity(),
+                coupon.getValidDays(),
+                coupon.getStartDate(),
+                coupon.getEndDate()
+        );
+    }
 }
