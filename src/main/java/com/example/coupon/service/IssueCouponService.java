@@ -24,13 +24,15 @@ public class IssueCouponService {
     private final IssuedCouponRepository issuedCouponRepository;
     private final CouponUsageHistoryRepository couponUsageHistoryRepository;
 
+//    @Transactional
     public Long issueCoupon(Long couponId, long userId) {
         if (issuedCouponRepository.existsByCouponIdAndUserId(couponId, userId)) {
             throw new IllegalStateException("이미 발급받은 쿠폰입니다.");
         }
         Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 쿠폰입니다."));
-        coupon.issue();
-        return issuedCouponRepository.save(IssuedCoupon.issue(coupon, userId)).getId();
+        coupon.issue(); //+1 하는부분
+//        couponRepository.flush();
+        return issuedCouponRepository.save(IssuedCoupon.issue(coupon, userId)).getId();//insert
     }
 }
