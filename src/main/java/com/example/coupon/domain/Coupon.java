@@ -46,4 +46,18 @@ public class Coupon {
 
     private LocalDateTime endDate;
 
+    public void resetIssuedQuantity() {
+        this.issuedQuantity = 0;
+    }
+
+    public void issue() {
+        LocalDateTime now = LocalDateTime.now();
+        if (couponStatus != CouponStatus.ACTIVE || now.isBefore(startDate) || now.isAfter(endDate)) {
+            throw new IllegalStateException("발급 가능한 쿠폰이 아닙니다.");
+        }
+        if (issuedQuantity >= totalQuantity) {
+            throw new IllegalStateException("쿠폰 재고가 없습니다.");
+        }
+        this.issuedQuantity++;
+    }
 }
