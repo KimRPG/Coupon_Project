@@ -28,7 +28,7 @@ public class IssueCouponService {
         if (issuedCouponRepository.existsByCouponIdAndUserId(couponId, userId)) {
             throw new IllegalStateException("이미 발급받은 쿠폰입니다.");
         }
-        Coupon coupon = couponRepository.findWithLockById(couponId)
+        Coupon coupon = couponRepository.findById(couponId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 쿠폰입니다."));
         coupon.issue();
         return issuedCouponRepository.save(IssuedCoupon.issue(coupon, userId)).getId();

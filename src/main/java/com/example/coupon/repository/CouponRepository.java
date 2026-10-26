@@ -16,6 +16,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
     List<Coupon> findByCouponStatusAndEndDateAfter (CouponStatus couponStatus, LocalDateTime now);
     boolean existsByName(String name);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+//    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Coupon> findWithLockById(Long id);
 }
